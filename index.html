@@ -9,8 +9,6 @@
     <title>Movies</title>
 </head>
 <body>
-    
-    
     <main>
         <section>
             <div class="container py-4">
@@ -20,7 +18,7 @@
                     <div class="col-4 position-relative">
                         <div class="position-sticky w-100" style="top: 30px;">
                             <form class="mb-5 form main-form">
-                                <input type="text" class=" year form-control form-control-sm mb-2 movie__year" aria-describedby="Search for movies" placeholder="Year">
+                                <input type="number" class=" year form-control form-control-sm mb-2 movie__year" aria-describedby="Search for movies" placeholder="Year">
                                 
                                 <input type="number" class="form-control form-control-sm mb-2 movie__rating" placeholder="IMDB rating">
                                 
@@ -40,19 +38,7 @@
                             
                             <h3 class="text-center">Bookmarked movies</h3>
                             
-                            <ul class="list-group">
-                                <li class="list-group-item p-3">
-                                    <h4 class="d-inline-block text-truncate h5" style="max-width: 100%;">Pokemon</h4>
-                                    <button class="btn btn-danger btn-sm d-block" type="button">Remove</button>
-                                </li>
-                                <li class="list-group-item p-3">
-                                    <h4 class="d-inline-block text-truncate h5" style="max-width: 100%;">Pokemon</h4>
-                                    <button class="btn btn-danger btn-sm d-block" type="button">Remove</button>
-                                </li>
-                                <li class="list-group-item p-3">
-                                    <h4 class="d-inline-block text-truncate h5" style="max-width: 100%;">Pokemon</h4>
-                                    <button class="btn btn-danger btn-sm d-block" type="button">Remove</button>
-                                </li>
+                            <ul class="list-group bookmarked-list">
                                 
                             </ul>
                         </div>
@@ -123,13 +109,7 @@
             </div>
         </div>
     </div>
-    
-    
-    
-    
-    
-    
-    
+
     
     <template id="template">
         <div class="card w-50 p-0">
@@ -155,7 +135,7 @@
                         More info
                     </button>
                     
-                    <button class="btn btn-outline-success" type="button">Bookmark</button>
+                    <button class="btn btn-outline-success btn-bookmarked" type="button">Bookmark</button>
                 </div>
             </div>
         </div>
