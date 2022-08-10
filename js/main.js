@@ -169,8 +169,9 @@ elWrapper.addEventListener("click", function (evt) {
             newBtn.addEventListener("click", function (evt) {
                 
                 newLi.remove()
-                console.log(evt.target.dataset.RemoveId);
-                bookmarkedMovies.shift(evt.target.dataset.RemoveId)
+                let removeBtn = evt.target.dataset.RemoveId
+                console.log(removeBtn);
+                bookmarkedMovies.shift(removeBtn)
             })
             
             newLi.appendChild(newH4);
