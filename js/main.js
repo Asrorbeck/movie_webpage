@@ -8,6 +8,8 @@ var elResult = document.querySelector(".result");
 var elSelect = document.querySelector(".movie__select");
 var elForm = document.querySelector(".main-form");
 var elBookmarkedList = document.querySelector(".bookmarked-list");
+var elYear = document.querySelector(".movie__year");
+var elRating = document.querySelector(".movie__rating");
 
 let bookmarkedMovies = []
 
@@ -57,11 +59,9 @@ function renderCard(array, wrapper) {
         
         
         newFragment.appendChild(movieCard)
-        wrapper.appendChild(newFragment)
     }
+    wrapper.appendChild(newFragment)
     
-    
-    return wrapper
 }
 renderCard(normolizedArray, elWrapper)
 
@@ -146,7 +146,7 @@ elWrapper.addEventListener("click", function (evt) {
         console.log(bookmarkedMovies);
         renderBookmarked(bookmarkedMovies, elBookmarkedList)
     }
-
+    
     function renderBookmarked(array, wrapper) {
         wrapper.innerHTML = null;
         
@@ -161,21 +161,53 @@ elWrapper.addEventListener("click", function (evt) {
             newH4.classList = "d-inline-block text-truncate h5";
             newH4.style.maxWidth = "100%";
             
+            let btnWrapper = document.createElement("div");
+            btnWrapper.classList = "btn-wrapper d-flex align-items-center justify-content-between";
+            
+            
             let newBtn = document.createElement("button");
-            newBtn.classList = "btn btn-danger btn-sm d-block";
+            newBtn.classList = "btn btn-danger d-block";
             newBtn.textContent = "Remove"
             newBtn.dataset.RemoveId = item.id
             
+            let newBtn1 = document.createElement("a");
+            newBtn1.classList = "btn btn-success movie__link"
+            newBtn1.href = item.videoURL
+            newBtn1.setAttribute("target", "blank")
+            newBtn1.textContent = "Watch trailer"
+            
+            let newBtn2 = document.createElement("button");
+            newBtn2.classList = "btn btn-primary more__info";
+            newBtn2.textContent = "More info";
+            newBtn2.dataset.movieId = item.id;
+            newBtn2.dataset.bsToggle = "modal";
+            newBtn2.dataset.bsTarget = "#exampleModal";
+
+            
+            newBtn2.addEventListener("click", function (evt) {
+                let currentId = newBtn2.dataset.movieId;
+                if (currentId) {
+                    let foundMovie = normolizedArray.find(function(item) {
+                        return item.id == currentId
+                    })
+                    elTitle.textContent = foundMovie.title;
+                    elBody.textContent = foundMovie.summary;
+                }
+            })
+            
             newBtn.addEventListener("click", function (evt) {
-                
                 newLi.remove()
                 let removeBtn = evt.target.dataset.RemoveId
                 console.log(removeBtn);
                 bookmarkedMovies.shift(removeBtn)
             })
             
+            btnWrapper.appendChild(newBtn)
+            btnWrapper.appendChild(newBtn1)
+            btnWrapper.appendChild(newBtn2)
+            
             newLi.appendChild(newH4);
-            newLi.appendChild(newBtn);
+            newLi.appendChild(btnWrapper);
             
             mainFragment.appendChild(newLi)
         }
@@ -184,6 +216,25 @@ elWrapper.addEventListener("click", function (evt) {
     }
 })
 
-
+elForm.addEventListener("submit", function (evt) {
+    evt.preventDefault()
+    
+    let inputYear = elYear.value.trim();
+    let inputRating = elRating.value.trim()
+    let inputSelect = elSelect.value.trim();
+    
+    console.log(inputRating, inputSelect, inputYear);
+    
+    
+    let filteredMovies = normolizedArray.filter(function (item) {
+        let select = inputSelect == "all" ? true : item.categories.includes(inputSelect);
+        
+        let validation = item.rating >= inputRating && item.movieYear >= inputYear && select
+        
+        return validation
+    })
+    
+    renderCard(filteredMovies)
+})
 
 
